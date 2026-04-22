@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGradM" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE5F1"/>
+      <stop offset="100%" stop-color="#E9DDFF"/>
+    </linearGradient>
+    <clipPath id="heartClipM">
+      <path d="M256 378 C 156 302, 120 236, 120 188 C 120 146, 154 114, 192 114 C 220 114, 244 130, 256 154 C 268 130, 292 114, 320 114 C 358 114, 392 146, 392 188 C 392 236, 356 302, 256 378 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- 整片背景填滿（maskable 需要） -->
+  <rect width="512" height="512" fill="url(#bgGradM)"/>
+
+  <!-- 愛心（縮小置中，留 safe zone） -->
+  <g>
+    <g clip-path="url(#heartClipM)">
+      <rect x="0" y="0" width="512" height="256" fill="#CD2E3A"/>
+      <rect x="0" y="256" width="512" height="256" fill="#0047A0"/>
+      <circle cx="256" cy="231" r="24" fill="#CD2E3A"/>
+      <circle cx="256" cy="279" r="24" fill="#0047A0"/>
+    </g>
+    <path d="M256 378 C 156 302, 120 236, 120 188 C 120 146, 154 114, 192 114 C 220 114, 244 130, 256 154 C 268 130, 292 114, 320 114 C 358 114, 392 146, 392 188 C 392 236, 356 302, 256 378 Z"
+          fill="none" stroke="#6B4BA8" stroke-width="3" opacity="0.3"/>
+  </g>
+</svg>

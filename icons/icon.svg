@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE5F1"/>
+      <stop offset="100%" stop-color="#E9DDFF"/>
+    </linearGradient>
+    <clipPath id="heartClip">
+      <path d="M256 420 C 120 320, 72 232, 72 168 C 72 112, 118 70, 170 70 C 208 70, 240 90, 256 124 C 272 90, 304 70, 342 70 C 394 70, 440 112, 440 168 C 440 232, 392 320, 256 420 Z"/>
+    </clipPath>
+  </defs>
+
+  <rect width="512" height="512" rx="112" ry="112" fill="url(#bgGrad)"/>
+
+  <circle cx="80" cy="90" r="6" fill="#FFB8D0" opacity="0.6"/>
+  <circle cx="440" cy="110" r="4" fill="#C4A7E7" opacity="0.7"/>
+  <circle cx="60" cy="430" r="5" fill="#D4BFFF" opacity="0.5"/>
+  <circle cx="460" cy="410" r="7" fill="#FFB8D0" opacity="0.5"/>
+  <circle cx="420" cy="460" r="3" fill="#9B7EDE" opacity="0.6"/>
+  <circle cx="90" cy="460" r="4" fill="#F472B6" opacity="0.5"/>
+
+  <g clip-path="url(#heartClip)">
+    <rect x="0" y="0" width="512" height="245" fill="#CD2E3A"/>
+    <rect x="0" y="245" width="512" height="267" fill="#0047A0"/>
+    <path d="M 190 245 Q 256 245 256 211 Q 256 178 289 178 Q 322 178 322 211 L 322 245 Z" fill="#CD2E3A"/>
+    <path d="M 322 245 Q 256 245 256 279 Q 256 312 223 312 Q 190 312 190 279 L 190 245 Z" fill="#0047A0"/>
+    <circle cx="289" cy="211" r="8" fill="#0047A0"/>
+    <circle cx="223" cy="279" r="8" fill="#CD2E3A"/>
+  </g>
+
+  <path d="M256 420 C 120 320, 72 232, 72 168 C 72 112, 118 70, 170 70 C 208 70, 240 90, 256 124 C 272 90, 304 70, 342 70 C 394 70, 440 112, 440 168 C 440 232, 392 320, 256 420 Z"
+        fill="none" stroke="#6B4BA8" stroke-width="4" opacity="0.25"/>
+
+  <ellipse cx="160" cy="130" rx="22" ry="13" fill="#FFFFFF" opacity="0.4" transform="rotate(-30 160 130)"/>
+</svg>

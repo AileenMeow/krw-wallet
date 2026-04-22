@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#C4A7E7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="韓幣錢包">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>韓幣小錢包 ♡</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    input {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    :root {
+      --pink-50: #FFF0F6;
+      --pink-100: #FFDCE8;
+      --pink-200: #FFB8D0;
+      --pink-400: #F472B6;
+      --purple-50: #F5F0FF;
+      --purple-100: #E9DDFF;
+      --purple-200: #D4BFFF;
+      --purple-400: #C4A7E7;
+      --purple-600: #9B7EDE;
+      --purple-800: #6B4BA8;
+      --purple-900: #3D2B66;
+      --korea-red: #CD2E3A;
+      --korea-blue: #0047A0;
+      --bg: #FFF5FB;
+      --card: #FFFFFF;
+      --text: #3D2B66;
+      --text-muted: #8B7AB0;
+      --border: rgba(196, 167, 231, 0.25);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Noto Sans TC", sans-serif;
+      background: linear-gradient(180deg, #FFF5FB 0%, #F5EDFF 100%);
+      background-attachment: fixed;
+      color: var(--text);
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      overflow-x: hidden;
+    }
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 20px 18px 32px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 4px 4px 0;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .title-icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    .title-text h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--purple-800);
+      letter-spacing: 0.3px;
+    }
+
+    .title-text p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .rate-badge {
+      background: var(--purple-100);
+      color: var(--purple-800);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.2px;
+    }
+
+    .converter {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 20px 18px;
+      box-shadow: 0 4px 20px rgba(155, 126, 222, 0.08), 0 1px 3px rgba(155, 126, 222, 0.04);
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    .field-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      padding: 0 4px;
+    }
+
+    .field-label span:first-child {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .field-label span:last-child {
+      font-size: 11px;
+      color: var(--purple-400);
+      font-weight: 500;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--purple-50);
+      border-radius: 16px;
+      padding: 14px 16px;
+      border: 1.5px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .input-wrap.focused {
+      border-color: var(--purple-400);
+      background: var(--card);
+    }
+
+    .input-wrap .symbol {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--purple-400);
+      margin-right: 10px;
+      min-width: 24px;
+    }
+
+    .input-wrap input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text);
+      width: 100%;
+      font-family: inherit;
+      -moz-appearance: textfield;
+    }
+
+    .input-wrap input::-webkit-outer-spin-button,
+    .input-wrap input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .swap-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: -4px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .swap-divider .line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .swap-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--purple-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--purple-600);
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 12px;
+    }
+
+    .quick-section {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 18px 16px;
+      box-shadow: 0 4px 20px rgba(155, 126, 222, 0.08), 0 1px 3px rgba(155, 126, 222, 0.04);
+      border: 1px solid var(--border);
+    }
+
+    .quick-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--purple-800);
+      margin-bottom: 12px;
+      padding: 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quick-title::before {
+      content: "";
+      width: 4px;
+      height: 14px;
+      background: linear-gradient(180deg, var(--pink-400), var(--purple-400));
+      border-radius: 2px;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .quick-btn {
+      background: linear-gradient(135deg, var(--pink-50) 0%, var(--purple-50) 100%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      font-family: inherit;
+    }
+
+    .quick-btn:active {
+      transform: scale(0.96);
+      box-shadow: 0 2px 8px rgba(155, 126, 222, 0.2);
+    }
+
+    .quick-btn .emoji {
+      font-size: 16px;
+      margin-bottom: 3px;
+      display: block;
+    }
+
+    .quick-btn .label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+      font-weight: 500;
+    }
+
+    .quick-btn .krw {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--purple-800);
+    }
+
+    .quick-btn .twd {
+      font-size: 11px;
+      color: var(--pink-400);
+      font-weight: 500;
+      margin-top: 1px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      padding: 0 4px;
+    }
+
+    .footer p {
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+    }
+
+    .heart-divider {
+      display: inline-block;
+      margin: 0 4px;
+      color: var(--pink-400);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1A1625;
+        --card: #261E3A;
+        --text: #F5EDFF;
+        --text-muted: #B9A9D9;
+        --border: rgba(196, 167, 231, 0.15);
+        --purple-50: #2D2442;
+        --purple-100: #3D2E5A;
+      }
+      body {
+        background: linear-gradient(180deg, #1A1625 0%, #2A1F3D 100%);
+      }
+      .quick-btn {
+        background: linear-gradient(135deg, #2D1E35 0%, #2D2442 100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+
+    <div class="header">
+      <div class="title">
+        <svg class="title-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="heartClip">
+              <path d="M24 42 C 10 32, 4 22, 4 15 C 4 9, 9 5, 14 5 C 18 5, 22 7, 24 11 C 26 7, 30 5, 34 5 C 39 5, 44 9, 44 15 C 44 22, 38 32, 24 42 Z"/>
+            </clipPath>
+          </defs>
+          <g clip-path="url(#heartClip)">
+            <rect x="0" y="0" width="48" height="24" fill="#CD2E3A"/>
+            <rect x="0" y="24" width="48" height="24" fill="#0047A0"/>
+            <circle cx="24" cy="24" r="6" fill="#CD2E3A"/>
+            <circle cx="24" cy="24" r="6" fill="#0047A0" clip-path="inset(0 0 50% 0)"/>
+          </g>
+          <path d="M24 42 C 10 32, 4 22, 4 15 C 4 9, 9 5, 14 5 C 18 5, 22 7, 24 11 C 26 7, 30 5, 34 5 C 39 5, 44 9, 44 15 C 44 22, 38 32, 24 42 Z" fill="none" stroke="#6B4BA8" stroke-width="1.2" opacity="0.4"/>
+        </svg>
+        <div class="title-text">
+          <h1>韓幣小錢包</h1>
+          <p>KRW → TWD Calculator</p>
+        </div>
+      </div>
+      <div class="rate-badge">1₩ = 0.0215</div>
+    </div>
+
+    <div class="converter">
+      <div class="field">
+        <div class="field-label">
+          <span>韓幣 KRW</span>
+          <span>韓元 ♡</span>
+        </div>
+        <div class="input-wrap" id="krw-wrap">
+          <span class="symbol">₩</span>
+          <input type="text" inputmode="numeric" id="krw-input" value="10,000" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="swap-divider">
+        <div class="line"></div>
+        <div class="swap-icon">↓</div>
+        <div class="line"></div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <span>台幣 TWD</span>
+          <span>新台幣 ♡</span>
+        </div>
+        <div class="input-wrap" id="twd-wrap">
+          <span class="symbol">NT$</span>
+          <input type="text" inputmode="decimal" id="twd-input" value="215" autocomplete="off">
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-section">
+      <div class="quick-title">常用金額快捷</div>
+      <div class="quick-grid" id="quick-grid">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>匯率 0.0215 <span class="heart-divider">♡</span> 離線可用 <span class="heart-divider">♡</span> 首爾愉快</p>
+    </div>
+
+  </div>
+
+  <script>
+    const RATE = 0.0215;
+
+    const quickItems = [
+      { emoji: '🍙', label: '便利店飯糰', krw: 1000 },
+      { emoji: '☕', label: '美式咖啡', krw: 5000 },
+      { emoji: '🍜', label: '一碗拉麵', krw: 10000 },
+      { emoji: '👘', label: '韓服租借', krw: 15000 },
+      { emoji: '🥩', label: '烤肉一人份', krw: 30000 },
+      { emoji: '🚄', label: 'KTX 首爾釜山', krw: 50000 },
+      { emoji: '🏨', label: '一晚住宿', krw: 100000 },
+      { emoji: '💜', label: '演唱會應援', krw: 500000 }
+    ];
+
+    const krwInput = document.getElementById('krw-input');
+    const twdInput = document.getElementById('twd-input');
+    const krwWrap = document.getElementById('krw-wrap');
+    const twdWrap = document.getElementById('twd-wrap');
+    const quickGrid = document.getElementById('quick-grid');
+
+    function formatInt(n) {
+      return Math.round(n).toLocaleString('en-US');
+    }
+
+    function formatTWD(n) {
+      if (n >= 100) return Math.round(n).toLocaleString('en-US');
+      return (Math.round(n * 10) / 10).toString();
+    }
+
+    function parseNum(str) {
+      if (!str) return 0;
+      return parseFloat(str.replace(/,/g, '')) || 0;
+    }
+
+    function updateFromKRW() {
+      const krw = parseNum(krwInput.value);
+      twdInput.value = formatTWD(krw * RATE);
+    }
+
+    function updateFromTWD() {
+      const twd = parseNum(twdInput.value);
+      krwInput.value = formatInt(twd / RATE);
+    }
+
+    krwInput.addEventListener('input', function() {
+      const caret = this.selectionStart;
+      const oldLen = this.value.length;
+      const raw = this.value.replace(/[^\d]/g, '');
+      const formatted = raw ? parseInt(raw).toLocaleString('en-US') : '';
+      this.value = formatted;
+      const newLen = formatted.length;
+      this.setSelectionRange(caret + (newLen - oldLen), caret + (newLen - oldLen));
+      twdInput.value = formatTWD(parseNum(formatted) * RATE);
+    });
+
+    twdInput.addEventListener('input', function() {
+      const cleaned = this.value.replace(/[^\d.]/g, '');
+      this.value = cleaned;
+      updateFromTWD();
+    });
+
+    krwInput.addEventListener('focus', () => {
+      krwWrap.classList.add('focused');
+      krwInput.select();
+    });
+    krwInput.addEventListener('blur', () => krwWrap.classList.remove('focused'));
+    twdInput.addEventListener('focus', () => {
+      twdWrap.classList.add('focused');
+      twdInput.select();
+    });
+    twdInput.addEventListener('blur', () => twdWrap.classList.remove('focused'));
+
+    quickItems.forEach(item => {
+      const btn = document.createElement('button');
+      btn.className = 'quick-btn';
+      btn.innerHTML = `
+        <span class="emoji">${item.emoji}</span>
+        <div class="label">${item.label}</div>
+        <div class="krw">₩${item.krw.toLocaleString('en-US')}</div>
+        <div class="twd">≈ NT$${formatTWD(item.krw * RATE)}</div>
+      `;
+      btn.addEventListener('click', () => {
+        krwInput.value = item.krw.toLocaleString('en-US');
+        twdInput.value = formatTWD(item.krw * RATE);
+        if (navigator.vibrate) navigator.vibrate(8);
+      });
+      quickGrid.appendChild(btn);
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
